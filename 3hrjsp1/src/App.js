@@ -1,23 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
-
+import React,{ useState } from 'react';
+import UI from './UI/UI';
+import Newprd from './NewProduct/NewProduct';
 function App() {
+  const [Electronics,setElectronics] = useState([])
+  const [Food,setFood] = useState([])
+  const [SkinCare,setSkinCare] = useState([])
+  
+  const addElectronics = (data) => {
+    setElectronics((prev) => {
+      console.log([data, ...prev])
+      return [data, ...prev]
+    })
+  }
+  const addFood = (data) => {
+    setFood((prev) => {
+      return [data, ...prev]
+    })
+  }
+  const addSkinCare = (data) => {
+    setSkinCare((prev) => {
+      return [data, ...prev]
+    })
+  }
+
+  const DeleteElectronic = (id) =>{
+    const newListElectronics = Electronics.filter((items) => items.id !==id);
+    setElectronics(newListElectronics);
+    localStorage.removeItem(id);
+  }
+  const DeleteFood = (id) =>{
+    const newListFood = Food.filter((items) => items.id !==id);
+    setFood(newListFood);
+    localStorage.removeItem(id);
+  }
+  const DeleteSkinCare = (id) =>{
+    const newListSkinCare = SkinCare.filter((items) => items.id !==id);
+    setSkinCare(newListSkinCare);
+    localStorage.removeItem(id);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reloa
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React 
-        </a>
-      </header>
+      <Newprd addElectronics ={addElectronics}addFood ={addFood} addSkinCare ={addSkinCare} />
+      <UI 
+      Electronics={Electronics}
+      Food={Food}
+      SkinCare={SkinCare}
+      DeleteElectronic = {DeleteElectronic} DeleteFood= {DeleteFood} 
+      DeleteSkinCare={DeleteSkinCare} 
+      />
     </div>
   );
 }
